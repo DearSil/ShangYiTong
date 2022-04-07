@@ -25,6 +25,7 @@ import java.util.Random;
 @Api(tags = "医院设置管理")
 @RestController
 @RequestMapping("/admin/hosp/hospitalSet")
+@CrossOrigin
 public class HospitalSetController {
 
     //注入Service
@@ -35,15 +36,6 @@ public class HospitalSetController {
     //查询HospitalSet中的所有数据
     @GetMapping("/findAll")
     public Result<List<HospitalSet>> findAll() {
-        //模拟异常产生
-        //手动抛出自定义异常
-
-        try {
-            System.out.println(10 / 0);
-        } catch (Exception e) {
-            throw new YyghException("分母不能为0",500);
-        }
-
         //调用hospitalSetService的方法
         List<HospitalSet> hospitalSets = hospitalSetService.list();
         return Result.ok(hospitalSets);
@@ -51,10 +43,9 @@ public class HospitalSetController {
 
     @ApiOperation("通过id删除医院配置信息")
     //根据id删除数据
-    @DeleteMapping("/{id}")
+    @DeleteMapping("removeHospSet/{id}")
     public Result<Boolean> removeHospSet(
-            @ApiParam(name = "id", value = "医院设置id", required = true)
-            @PathVariable String id) {
+            @ApiParam(name = "id", value = "医院设置id", required = true) @PathVariable String id) {
         boolean isok = hospitalSetService.removeById(id);
         if (isok) {
             return Result.ok();
@@ -65,6 +56,7 @@ public class HospitalSetController {
     /*
     条件查询带分页
      */
+    @ApiOperation("分页查询")
     @PostMapping("/findPage/{current}/{limit}")
     public Result findPage(
             @ApiParam(name = "current", value = "当前页") @PathVariable long current,
