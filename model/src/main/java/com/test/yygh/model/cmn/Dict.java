@@ -15,7 +15,7 @@ import java.util.Map;
  * Dict
  * </p>
  *
- * @author qy
+ * @author DearSil
  */
 @Data
 @ApiModel(description = "数据字典")
@@ -33,7 +33,7 @@ public class Dict {
     private Date createTime;
 
     @ApiModelProperty(value = "更新时间")
-    @TableField("update_time")
+    @TableField(value = "update_time",fill = FieldFill.INSERT_UPDATE)
     private Date updateTime;
 
     @ApiModelProperty(value = "逻辑删除(1:已删除，0:未删除)")
